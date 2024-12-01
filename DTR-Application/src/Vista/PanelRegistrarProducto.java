@@ -5,23 +5,15 @@
 package Vista;
 
 import Controlador.Controlador;
-import Modelo.ImageUtils;
-import Modelo.Producto;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -278,14 +270,14 @@ public class PanelRegistrarProducto extends javax.swing.JPanel implements Action
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Registrar")){
             Controlador controlador = new Controlador(this);
-            controlador.registrarProducto();
+            controlador.registrarProductoregistro();
             
         }
     
         // Otra acción de cambiar la imagen
         if (e.getActionCommand().equals("Cambiar")) {
             Controlador controlador = new Controlador(this);
-            controlador.cargarImagenregistrar();
+            controlador.cargarImagenregistro();
         }
     }
     

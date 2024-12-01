@@ -236,4 +236,67 @@ public static ArrayList<Producto> listarProductosFiltrados(String texto) {
     }
     return productos;
 }
+    //nuevo
+public void cambiarCantidadProducto() {
+    String sql = "UPDATE Producto SET cantidad = ? WHERE id = ?";
+    Conexion c = new Conexion();
+    try (PreparedStatement stmt = c.getConnection().prepareStatement(sql)) {
+        stmt.setInt(1, this.cantidad);  // Asignar la cantidad directamente desde el atributo de la clase
+        stmt.setInt(2, this.id);        // Usar el id de la clase actual
+        stmt.executeUpdate();           // Ejecutar la actualización
+    } catch (SQLException e) {
+        System.out.println("Error al establecer la nueva cantidad del producto: " + e.getMessage());
+    } finally {
+        c.closeConnection();
+    }
+}
+
+
+public void sustraerCantidadProducto() {
+    String sql = "UPDATE Producto SET cantidad = cantidad - ? WHERE id = ?";
+    Conexion c = new Conexion();
+    try (PreparedStatement stmt = c.getConnection().prepareStatement(sql)) {
+        stmt.setInt(1, this.cantidad);  // Restar la cantidad del atributo de la clase
+        stmt.setInt(2, this.id);        // Usar el id de la clase actual
+        stmt.executeUpdate();           // Ejecutar la actualización
+    } catch (SQLException e) {
+        System.out.println("Error al actualizar la cantidad del producto: " + e.getMessage());
+    } finally {
+        c.closeConnection();
+    }
+}
+
+public void devolverCantidadProducto() {
+    String sql = "UPDATE Producto SET cantidad = cantidad + ? WHERE id = ?";
+    Conexion c = new Conexion();
+    try (PreparedStatement stmt = c.getConnection().prepareStatement(sql)) {
+        stmt.setInt(1, this.cantidad);  // Sumar la cantidad del atributo de la clase
+        stmt.setInt(2, this.id);        // Usar el id de la clase actual
+        stmt.executeUpdate();           // Ejecutar la actualización
+    } catch (SQLException e) {
+        System.out.println("Error al devolver la cantidad del producto: " + e.getMessage());
+    } finally {
+        c.closeConnection();
+    }
+}
+
+
+
+public int obtenerCantidadProductoDisponible() {
+    String sql = "SELECT cantidad FROM Producto WHERE id = ?";
+    Conexion c = new Conexion();
+    try (PreparedStatement stmt = c.getConnection().prepareStatement(sql)) {
+        stmt.setInt(1, this.id); // Usar directamente el id del objeto actual
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("cantidad");
+        }
+    } catch (SQLException e) {
+        System.out.println("Error al obtener la cantidad disponible del producto: " + e.getMessage());
+    } finally {
+        c.closeConnection();
+    }
+    return 0; // Devuelve 0 si no se encuentra el producto o hay un error
+}
+
 }

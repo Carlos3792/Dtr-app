@@ -22,14 +22,18 @@ import javax.swing.border.Border;
  * @author carlos
  */
 public class PanelProductoAgregar extends javax.swing.JPanel implements ActionListener{
+    //funcion, 1 para registrar, 2 para editar
     //modelo
     int id;
+    //Tipo
+    int tipo;
     //Para gstionar una orden de compra
     int cantidadtotal;
     int cantidadacumulativa = 0;
     //
     JPanel jPanelPadre;
     PanelRegistrarOrdenCompra panel7;
+    PantallaModificarOrden pantalla1;
     
     /**
      * Creates new form PanelProductoAgregar
@@ -253,7 +257,7 @@ public class PanelProductoAgregar extends javax.swing.JPanel implements ActionLi
         if(e.getActionCommand().equals("Agregar")){
             // Llamar al método para eliminar el producto
             Controlador controlador = new Controlador(this);
-            controlador.agregarProductoOrdenCompra();
+            controlador.agregarProductoordenpornumero(tipo);//.agregarProductoordencompraregistro();
         }
     }
     
@@ -276,6 +280,12 @@ public class PanelProductoAgregar extends javax.swing.JPanel implements ActionLi
             }
         });
     }
+    
+    /*public void actualizarCantidadDisponible(int nuevaCantidadDisponible) {
+    this.cantidadacumulativa = this.cantidadtotal - nuevaCantidadDisponible;
+    this.jLabel13.setText(String.valueOf(nuevaCantidadDisponible));
+}*/
+
 
     public int getId() {
         return id;
@@ -382,4 +392,20 @@ public class PanelProductoAgregar extends javax.swing.JPanel implements ActionLi
         this.cantidadacumulativa = cantidadacumulativa;
     }
 
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public PantallaModificarOrden getPantalla1() {
+        return pantalla1;
+    }
+
+    public void setPantalla1(PantallaModificarOrden pantalla1) {
+        this.pantalla1 = pantalla1;
+    }
+    
 }

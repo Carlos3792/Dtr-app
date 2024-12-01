@@ -25,7 +25,7 @@ import javax.swing.border.Border;
  * @author carlos
  */
 public class PanelCasoSoporte extends javax.swing.JPanel implements ActionListener{
-    //modelo
+    //Atributos
     int id;
     JPanel jPanelPadre;
     /**
@@ -33,6 +33,7 @@ public class PanelCasoSoporte extends javax.swing.JPanel implements ActionListen
      */
     public PanelCasoSoporte() {
         initComponents();
+        //Escuchadores
         jButton2.addActionListener(this);
         jButton3.addActionListener(this);
         addMouseListenerToButton(jButton2);
@@ -79,8 +80,10 @@ public class PanelCasoSoporte extends javax.swing.JPanel implements ActionListen
             }
         });
 
-        jLabel14.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 3));
+        jLabel14.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/icon-support-white(1).png"))); // NOI18N
+        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(238, 80, 69), 3));
 
         jButton3.setBackground(new java.awt.Color(0, 19, 46));
         jButton3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
@@ -222,26 +225,28 @@ public class PanelCasoSoporte extends javax.swing.JPanel implements ActionListen
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        //Si le dio a editar
         if(e.getActionCommand().equals("Editar")){
             try {
                 Controlador controlador = new Controlador(this);
-                controlador.abrirVentanaEdicionCasoSoporte();
+                controlador.abrirVentanacasosoporteedicion();
             } catch (IOException ex) {
                 Logger.getLogger(PanelProducto.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
                 Logger.getLogger(PanelCasoSoporte.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        //Si le dio a eliminar
         if(e.getActionCommand().equals("Eliminar")){
-            // Llamar al método para eliminar el producto
+            //Llamar al método para eliminar el producto
             Controlador controlador = new Controlador(this);
-            controlador.eliminarCasoSoporte();
+            controlador.eliminarCasosoporteconsulta();
         }
     }
     
-    // Método para agregar un MouseListener a los botones
+    //Método para agregar un MouseListener a los botones
     private void addMouseListenerToButton(JButton button) {
-        // Crear un borde original para el botón
+        //Crear un borde original para el botón
         Border originalBorder = button.getBorder();
 
         button.addMouseListener(new MouseAdapter() {
@@ -259,19 +264,7 @@ public class PanelCasoSoporte extends javax.swing.JPanel implements ActionListen
         });
     }
     
-    public void actualizarVista() {
-        // Actualiza la vista con los valores editados
-        removeAll();
-        initComponents();
-        revalidate();
-        repaint();
-        
-        /*// Aquí puedes actualizar la vista general si se editó el producto
-        // Esto dependerá de tu lógica, si el panel de producto cambia, se puede hacer así
-        jPanelPadre.revalidate();
-        jPanelPadre.repaint();*/
-    }
-
+    //Setters and getters
     public int getId() {
         return id;
     }
@@ -319,6 +312,5 @@ public class PanelCasoSoporte extends javax.swing.JPanel implements ActionListen
     public void setjLabel9(JLabel jLabel9) {
         this.jLabel9 = jLabel9;
     }
-    
     
 }

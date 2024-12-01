@@ -6,6 +6,7 @@ package Vista;
 
 import Controlador.Controlador;
 import Modelo.Producto;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,11 +15,16 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -36,8 +42,28 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
      */
     public PanelRegistrarOrdenCompra() {
         initComponents();
-        initComponents();
-        //Libro:
+        //initComponents();
+
+        //Desactivar los campos de una orden de compra con domicilio:
+        jLabel4.setVisible(false);
+        jLabel9.setVisible(false);
+        jLabel7.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel10.setVisible(false);
+        jTextField3.setVisible(false);
+        jTextField6.setVisible(false);
+        jTextField4.setVisible(false);
+        jComboBox1.setVisible(false);
+
+            
+        //Tabla:
+        // Cambiar el fondo de la tabla a blanco
+        //jTable1.setBackground(Color.BLUE);
+
+        // Cambiar el color de los encabezados
+        //jTable1.getTableHeader().setBackground(Color.BLUE);
+        //jTable1.getTableHeader().setForeground(Color.WHITE);  // Cambia el texto a blanco
+
         //modelo1.addColumn("Id");
         modelo1.addColumn("Nombre del producto");
         modelo1.addColumn("Precio");
@@ -47,14 +73,36 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
         jRadioButton1.addActionListener(this);
         jRadioButton2.addActionListener(this);
         jButton3.addActionListener(this);
+        jButton4.addActionListener(this);
+        jButton2.addActionListener(this);
         
         addMouseListenerToButton(jButton2);
         addMouseListenerToButton(jButton3);
         addMouseListenerToButton(jButton4);
         
         Controlador controlador = new Controlador(this);
-        controlador.cargarProductoOrdenCompra();
-        controlador.filtrarProductosOrdenCompra();
+        controlador.cargarProductosseleccionordencompraregistro();
+        // Agregar filtrado dinámico al campo de texto
+        jTextField2.getDocument().addDocumentListener(new DocumentListener() {
+        @Override
+        public void insertUpdate(DocumentEvent e) {
+            filtrar();
+        }
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {
+            filtrar();
+        }
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {
+            filtrar();
+        }
+
+        private void filtrar() {
+            controlador.filtrarProductosordencompraregistro();
+        }
+    });
         
     }
 
@@ -67,13 +115,12 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -92,6 +139,10 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -126,27 +177,22 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
         jTextField1.setForeground(new java.awt.Color(0, 19, 46));
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel3.setText("Descripción del producto:");
+        jLabel3.setText("Fecha de registro:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jLabel4.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel4.setText("Precio del producto:");
+        jLabel4.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
+        jLabel4.setText("Datos del domicilio:");
 
         jTextField3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
         jTextField3.setForeground(new java.awt.Color(0, 19, 46));
 
         jLabel7.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel7.setText("Cantidad del producto:");
+        jLabel7.setText("Destinatario:");
 
         jTextField6.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
         jTextField6.setForeground(new java.awt.Color(0, 19, 46));
 
         jLabel5.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel5.setText("Categoría del producto:");
+        jLabel5.setText("Telefono:");
 
         jTextField4.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
         jTextField4.setForeground(new java.awt.Color(0, 19, 46));
@@ -174,12 +220,15 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
         jLabel6.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
         jLabel6.setText("Productos:");
 
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Registro común");
 
+        buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Pedido a domicilio");
 
         jLabel8.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel8.setText("Nombre del producto:");
+        jLabel8.setText("Nombre del cliente:");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new java.awt.GridLayout(10, 0, 1, 10));
@@ -221,6 +270,14 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
             }
         });
 
+        jLabel9.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
+        jLabel9.setText("Dirección:");
+
+        jLabel10.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
+        jLabel10.setText("Estado:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "En Camino", "Entregado" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -230,22 +287,31 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                             .addComponent(jLabel3)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2)
                             .addComponent(jRadioButton1)
                             .addComponent(jRadioButton2)
-                            .addComponent(jLabel8)))
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,22 +333,10 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jRadioButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton2)
@@ -293,9 +347,11 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -307,8 +363,24 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addGap(4, 4, 4)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -331,10 +403,14 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -342,15 +418,14 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
@@ -360,71 +435,70 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("Quitar el ultimo")){
-            Controlador controlador = new Controlador(this);
-            controlador.eliminarProductoOrdenCompra();
-        }
-        if(e.getActionCommand().equals("Paciente")){
-            //Activar los botones de paciiente:
-            /*jTextField6.setEnabled(true);
-            jTextField7.setEnabled(true);
-            //Desactivar los botones de empleado.
-            jTextField8.setEnabled(false);
-            jTextField9.setEnabled(false);
-            jTextField10.setEnabled(false);
-            jTextField11.setEnabled(false);
-            jTextField12.setEnabled(false);
-            jTextField13.setEnabled(false);
-            jTextField14.setEnabled(false);
-            jComboBox3.setEnabled(false);
-            jComboBox1.setEnabled(false);
-            jComboBox2.setEnabled(false);
-            jRadioButton3.setEnabled(false);
-            jRadioButton3.setSelected(true);
-            jRadioButton4.setEnabled(false);*/
+        Controlador controlador = new Controlador(this);
+        switch (e.getActionCommand()) {
+            case "Quitar el ultimo":
+                controlador.eliminarProductoordencompraregistro();
+                break;
+            case "Registrar":
+                controlador.registrarOrdencompraregistro();
+                break;
+            default:
+                break;
         }
         
-        if(e.getActionCommand().equals("Empleado")){
-            /*//Activar los botones de paciiente:
-            jTextField6.setEnabled(false);
-            jTextField7.setEnabled(false);
-            //Desactivar los botones de empleado.
-            jTextField8.setEnabled(true);
-            jTextField9.setEnabled(true);
-            jTextField10.setEnabled(true);
-            jTextField11.setEnabled(true);
-            jTextField12.setEnabled(true);
-            jTextField13.setEnabled(true);
-            //jTextField13.setEnabled(true);
-            //jTextField14.setEnabled(true);
-            jComboBox1.setEnabled(true);
-            jComboBox2.setEnabled(true);
-            jRadioButton3.setEnabled(true);
-            jRadioButton4.setEnabled(true);*/
+        if(e.getActionCommand().equals("🔍")){
+        }
+        if(e.getActionCommand().equals("Registro común")){
+            //Desactivar los campos de una orden de compra con domicilio:
+            jLabel4.setVisible(false);
+            jLabel9.setVisible(false);
+            jLabel7.setVisible(false);
+            jLabel5.setVisible(false);
+            jLabel10.setVisible(false);
+            jTextField3.setVisible(false);
+            jTextField6.setVisible(false);
+            jTextField4.setVisible(false);
+            jComboBox1.setVisible(false);
             
         }
+        if(e.getActionCommand().equals("Pedido a domicilio")){
+            //Desactivar los campos de una orden de compra con domicilio:
+            jLabel4.setVisible(true);
+            jLabel9.setVisible(true);
+            jLabel7.setVisible(true);
+            jLabel5.setVisible(true);
+            jLabel10.setVisible(true);
+            jTextField3.setVisible(true);
+            jTextField6.setVisible(true);
+            jTextField4.setVisible(true);
+            jComboBox1.setVisible(true);
+            
+        }
+           
     }
     
-    // Método para agregar un MouseListener a los botones
+    //Método para agregar un MouseListener a los botones
     private void addMouseListenerToButton(JButton button) {
-        // Crear un borde original para el botón
+        //Crear un borde original para el botón
         Border originalBorder = button.getBorder();
 
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Cambiar el borde cuando el mouse entra
+                //Cambiar el borde cuando el mouse entra
                 button.setBorder(BorderFactory.createLineBorder(new Color(236, 74, 28), 2));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                // Restaurar el borde original cuando el mouse sale
+                //Restaurar el borde original cuando el mouse sale
                 button.setBorder(originalBorder);
             }
         });
     }
     
+    //Setters and getters
     public JPanel getjPanel2() {
         return jPanel2;
     }
@@ -441,6 +515,54 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
         this.jTextField2 = jTextField2;
     }
 
+    public JComboBox<String> getjComboBox1() {
+        return jComboBox1;
+    }
+
+    public void setjComboBox1(JComboBox<String> jComboBox1) {
+        this.jComboBox1 = jComboBox1;
+    }
+
+    public JDateChooser getjDateChooser1() {
+        return jDateChooser1;
+    }
+
+    public void setjDateChooser1(JDateChooser jDateChooser1) {
+        this.jDateChooser1 = jDateChooser1;
+    }
+
+    public JTextField getjTextField1() {
+        return jTextField1;
+    }
+
+    public void setjTextField1(JTextField jTextField1) {
+        this.jTextField1 = jTextField1;
+    }
+
+    public JTextField getjTextField3() {
+        return jTextField3;
+    }
+
+    public void setjTextField3(JTextField jTextField3) {
+        this.jTextField3 = jTextField3;
+    }
+
+    public JTextField getjTextField4() {
+        return jTextField4;
+    }
+
+    public void setjTextField4(JTextField jTextField4) {
+        this.jTextField4 = jTextField4;
+    }
+
+    public JTextField getjTextField6() {
+        return jTextField6;
+    }
+
+    public void setjTextField6(JTextField jTextField6) {
+        this.jTextField6 = jTextField6;
+    }
+    
     public DefaultTableModel getModelo1() {
         return modelo1;
     }
@@ -465,7 +587,6 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
         this.productosagregados = productosagregados;
     }
 
-
     public ArrayList<PanelProductoAgregar> getPaneles() {
         return paneles;
     }
@@ -473,7 +594,21 @@ public class PanelRegistrarOrdenCompra extends javax.swing.JPanel implements Act
     public void setPaneles(ArrayList<PanelProductoAgregar> paneles) {
         this.paneles = paneles;
     }
-    
-    
+
+    public JRadioButton getjRadioButton1() {
+        return jRadioButton1;
+    }
+
+    public void setjRadioButton1(JRadioButton jRadioButton1) {
+        this.jRadioButton1 = jRadioButton1;
+    }
+
+    public JRadioButton getjRadioButton2() {
+        return jRadioButton2;
+    }
+
+    public void setjRadioButton2(JRadioButton jRadioButton2) {
+        this.jRadioButton2 = jRadioButton2;
+    }
     
 }

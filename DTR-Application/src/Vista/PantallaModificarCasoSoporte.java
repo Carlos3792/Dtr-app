@@ -32,6 +32,7 @@ public class PantallaModificarCasoSoporte extends javax.swing.JFrame implements 
     public PantallaModificarCasoSoporte() {
         initComponents();
         
+        //Escuchadores
         jButton2.addActionListener(this);
         jButton3.addActionListener(this);
         addMouseListenerToButton(jButton2);
@@ -106,7 +107,7 @@ public class PantallaModificarCasoSoporte extends javax.swing.JFrame implements 
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel4.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel4.setText("Precio del producto:");
+        jLabel4.setText("Fecha de registro:");
 
         jButton2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(21, 65, 83));
@@ -260,33 +261,34 @@ public class PantallaModificarCasoSoporte extends javax.swing.JFrame implements 
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Actualizar")){
             Controlador controlador = new Controlador(this);
-            controlador.guardarCambiosCasoSoporte();
+            controlador.guardarcambioscasosoporteedicion();
         }
         if(e.getActionCommand().equals("Cancelar")){
             this.dispose();
         }
     }
     
-    // Método para agregar un MouseListener a los botones
+    //Método para agregar un MouseListener a los botones
     private void addMouseListenerToButton(JButton button) {
-        // Crear un borde original para el botón
+        //Crear un borde original para el botón
         Border originalBorder = button.getBorder();
 
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Cambiar el borde cuando el mouse entra
+                //Cambiar el borde cuando el mouse entra
                 button.setBorder(BorderFactory.createLineBorder(new Color(236, 74, 28), 2));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                // Restaurar el borde original cuando el mouse sale
+                //Restaurar el borde original cuando el mouse sale
                 button.setBorder(originalBorder);
             }
         });
     }
 
+    //Setters and getters
     public int getId() {
         return id;
     }
@@ -334,7 +336,5 @@ public class PantallaModificarCasoSoporte extends javax.swing.JFrame implements 
     public void setjTextField1(JTextField jTextField1) {
         this.jTextField1 = jTextField1;
     }
-    
-    
     
 }

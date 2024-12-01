@@ -5,37 +5,55 @@
 package Vista;
 
 import Controlador.Controlador;
-import Modelo.Producto;
-import Modelo.ProductoData;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author carlos
  */
 public class PanelConsultaProducto extends javax.swing.JPanel implements ActionListener{
+    //Atributos
+    ArrayList<PanelProducto> paneles = new ArrayList<PanelProducto>(); 
 
     /**
      * Creates new form PantallaConsultaProducto
      */
     public PanelConsultaProducto() {
         initComponents();
+        //Escuchadores
         addMouseListenerToButton(jButton4);
         jButton4.addActionListener(this);
+        //Controlador
         Controlador controlador = new Controlador(this);
-        controlador.cargarProducto();
-        
+        controlador.cargarProductosconsulta();  
+        jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                controlador.filtrarProductosconsulta();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                controlador.filtrarProductosconsulta();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                controlador.filtrarProductosconsulta();
+            }
+        });
     }
 
     /**
@@ -144,23 +162,19 @@ public class PanelConsultaProducto extends javax.swing.JPanel implements ActionL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("🔍")){
-            Controlador controlador = new Controlador(this);
-            controlador.filtrarProductos();
-            
+        if(e.getActionCommand().equals("🔍")){                       
         }
-        //
     }
 
-    // Método para agregar un MouseListener a los botones
+    //Método para agregar un MouseListener a los botones
     private void addMouseListenerToButton(JButton button) {
-        // Crear un borde original para el botón
+        //Crear un borde original para el botón
         Border originalBorder = button.getBorder();
 
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Cambiar el borde cuando el mouse entra
+                //Cambiar el borde cuando el mouse entra
                 button.setBorder(BorderFactory.createLineBorder(new Color(236, 74, 28), 2));
             }
 
@@ -172,6 +186,7 @@ public class PanelConsultaProducto extends javax.swing.JPanel implements ActionL
         });
     }
     
+    //Setters and getters
     public JPanel getjPanel1() {
         return jPanel1;
     }
@@ -187,7 +202,13 @@ public class PanelConsultaProducto extends javax.swing.JPanel implements ActionL
     public void setjTextField1(JTextField jTextField1) {
         this.jTextField1 = jTextField1;
     }
+
+    public ArrayList<PanelProducto> getPaneles() {
+        return paneles;
+    }
+
+    public void setPaneles(ArrayList<PanelProducto> paneles) {
+        this.paneles = paneles;
+    }
    
-    
-    
 }

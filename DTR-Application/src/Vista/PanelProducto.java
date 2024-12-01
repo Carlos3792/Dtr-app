@@ -5,10 +5,7 @@
 package Vista;
 
 import Controlador.Controlador;
-import Modelo.Producto;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -263,7 +260,7 @@ public class PanelProducto extends javax.swing.JPanel implements ActionListener{
         if(e.getActionCommand().equals("Editar")){
             try {
                 Controlador controlador = new Controlador(this);
-                controlador.abrirVentanaEdicionProducto();
+                controlador.abrirVentanaproductoedicion();
             } catch (IOException ex) {
                 Logger.getLogger(PanelProducto.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -271,7 +268,7 @@ public class PanelProducto extends javax.swing.JPanel implements ActionListener{
         if(e.getActionCommand().equals("Eliminar")){
             // Llamar al método para eliminar el producto
             Controlador controlador = new Controlador(this);
-            controlador.eliminarProducto();
+            controlador.eliminarProductoconsulta();
         }
     }
     
@@ -294,23 +291,8 @@ public class PanelProducto extends javax.swing.JPanel implements ActionListener{
             }
         });
     }
-    
-    public void actualizarVista() {
-        // Actualiza la vista con los valores editados
-        removeAll();
-        initComponents();
-        revalidate();
-        repaint();
-        
-        /*// Aquí puedes actualizar la vista general si se editó el producto
-        // Esto dependerá de tu lógica, si el panel de producto cambia, se puede hacer así
-        jPanelPadre.revalidate();
-        jPanelPadre.repaint();*/
-    }
-    
-    //ira al controlador
-    
-
+  
+    //Setters and getters
     public JPanel getjPanelPadre() {
         return jPanelPadre;
     }

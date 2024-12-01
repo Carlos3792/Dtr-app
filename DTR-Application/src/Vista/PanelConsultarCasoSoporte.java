@@ -10,17 +10,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
  * @author carlos
  */
 public class PanelConsultarCasoSoporte extends javax.swing.JPanel implements ActionListener{
+    //Atributos
+    ArrayList<PanelCasoSoporte> paneles = new ArrayList<PanelCasoSoporte>();
 
     /**
      * Creates new form PanelConsultarCasoSoporte
@@ -29,8 +34,23 @@ public class PanelConsultarCasoSoporte extends javax.swing.JPanel implements Act
         initComponents();
         addMouseListenerToButton(jButton4);
         Controlador controlador = new Controlador(this);
-        controlador.cargarCasoSoporte();
-        controlador.filtrarCasosSoporte();
+        controlador.cargarCasosoporteconsulta();
+        jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                controlador.filtrarCasossoporteconsulta();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                controlador.filtrarCasossoporteconsulta();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                controlador.filtrarCasossoporteconsulta();
+            }
+        });
     }
 
     /**
@@ -140,30 +160,32 @@ public class PanelConsultarCasoSoporte extends javax.swing.JPanel implements Act
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void actionPerformed(ActionEvent ae) {
-        //
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("🔍")){                       
+        }
     }
     
-    // Método para agregar un MouseListener a los botones
+    //Método para agregar un MouseListener a los botones
     private void addMouseListenerToButton(JButton button) {
-        // Crear un borde original para el botón
+        //Crear un borde original para el botón
         Border originalBorder = button.getBorder();
 
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                // Cambiar el borde cuando el mouse entra
+                //Cambiar el borde cuando el mouse entra
                 button.setBorder(BorderFactory.createLineBorder(new Color(236, 74, 28), 2));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                // Restaurar el borde original cuando el mouse sale
+                //Restaurar el borde original cuando el mouse sale
                 button.setBorder(originalBorder);
             }
         });
     }
 
+    //Setters and getters
     public JPanel getjPanel1() {
         return jPanel1;
     }
@@ -179,7 +201,13 @@ public class PanelConsultarCasoSoporte extends javax.swing.JPanel implements Act
     public void setjTextField1(JTextField jTextField1) {
         this.jTextField1 = jTextField1;
     }
-    
-    
+
+    public ArrayList<PanelCasoSoporte> getPaneles() {
+        return paneles;
+    }
+
+    public void setPaneles(ArrayList<PanelCasoSoporte> paneles) {
+        this.paneles = paneles;
+    }
     
 }

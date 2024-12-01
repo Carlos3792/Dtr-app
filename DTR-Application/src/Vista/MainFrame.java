@@ -340,6 +340,10 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener{
             PanelRegistrarOrdenCompra pantalla1 = new PanelRegistrarOrdenCompra();
             mostrarPanel(pantalla1);  
         }
+        if(e.getActionCommand().equals("⚪ Consultar orden de compra")){
+            PanelConsultarOrden pantalla1 = new PanelConsultarOrden();
+            mostrarPanel(pantalla1);  
+        }
         
     }
     

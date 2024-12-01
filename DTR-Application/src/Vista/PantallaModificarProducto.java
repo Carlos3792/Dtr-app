@@ -5,22 +5,15 @@
 package Vista;
 
 import Controlador.Controlador;
-import Modelo.ImageUtils;
-import Modelo.Producto;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -30,10 +23,11 @@ import javax.swing.border.Border;
  * @author carlos
  */
 public class PantallaModificarProducto extends javax.swing.JFrame implements ActionListener{
-    //modelo
+    //Atributos
     int id;
     File imagenSeleccionada;
     PanelProducto pantalla;
+    
     //private Runnable onProductoEliminado; // Callback para manejar la eliminación del producto
 
     /**
@@ -41,6 +35,7 @@ public class PantallaModificarProducto extends javax.swing.JFrame implements Act
      */
     public PantallaModificarProducto() {
         initComponents();
+        //Escuchadores
         jButton1.addActionListener(this);
         jButton2.addActionListener(this);
         jButton3.addActionListener(this);
@@ -349,11 +344,11 @@ public class PantallaModificarProducto extends javax.swing.JFrame implements Act
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Actualizar")){
             Controlador controlador = new Controlador(this);
-            controlador.guardarCambiosProducto();
+            controlador.guardarCambiosproductoedicion();
         }
         if(e.getActionCommand().equals("Cambiar")){
             Controlador controlador = new Controlador(this);
-            controlador.cargarImagenmodificar();
+            controlador.cargarImagenedicion();
         }
         if(e.getActionCommand().equals("Cancelar")){
             this.dispose();
@@ -381,6 +376,7 @@ public class PantallaModificarProducto extends javax.swing.JFrame implements Act
         });
     }
     
+    //Setters and getters
     public PanelProducto getPantalla() {
         return pantalla;
     }
@@ -460,8 +456,6 @@ public class PantallaModificarProducto extends javax.swing.JFrame implements Act
     public void setjTextField6(JTextField jTextField6) {
         this.jTextField6 = jTextField6;
     }
-    
-    
     
     
 }

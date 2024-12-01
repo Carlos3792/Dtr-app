@@ -5,12 +5,10 @@
 package Vista;
 
 import Controlador.Controlador;
-import Modelo.CasoSoporte;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -86,7 +84,7 @@ public class PanelRegistrarCasoSoporte extends javax.swing.JPanel implements Act
         jTextField1.setForeground(new java.awt.Color(0, 19, 46));
 
         jLabel3.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
-        jLabel3.setText("Descripción del producto:");
+        jLabel3.setText("Descripción del caso:");
 
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 14)); // NOI18N
@@ -115,21 +113,22 @@ public class PanelRegistrarCasoSoporte extends javax.swing.JPanel implements Act
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextField1)
-                    .addComponent(jLabel9)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextField1)
+                            .addComponent(jLabel9)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,7 +180,7 @@ public class PanelRegistrarCasoSoporte extends javax.swing.JPanel implements Act
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Registrar")){
             Controlador controlador = new Controlador(this);
-            controlador.registrarCasosoporte();
+            controlador.registrarCasosoporteregistro();
         }
     }
     
