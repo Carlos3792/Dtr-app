@@ -34,6 +34,7 @@ public class PanelProductoAgregar extends javax.swing.JPanel implements ActionLi
     JPanel jPanelPadre;
     PanelRegistrarOrdenCompra panel7;
     PantallaModificarOrden pantalla1;
+    PantallaModificarOrdenConDomicilio pantalla2;
     
     /**
      * Creates new form PanelProductoAgregar
@@ -407,5 +408,14 @@ public class PanelProductoAgregar extends javax.swing.JPanel implements ActionLi
     public void setPantalla1(PantallaModificarOrden pantalla1) {
         this.pantalla1 = pantalla1;
     }
-    
+
+    public PantallaModificarOrdenConDomicilio getPantalla2() {
+        return pantalla2;
+    }
+
+    public void setPantalla2(PantallaModificarOrdenConDomicilio pantalla2) {
+        this.pantalla2 = pantalla2;
+    }
+ 
 }
+

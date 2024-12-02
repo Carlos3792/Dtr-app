@@ -65,8 +65,7 @@ public class Controlador {
     PanelProductoAgregar panel8;
     PanelConsultarOrden panel9;
     PanelOrden panel10;
-    PantallaModificarOrden pantalla3;
-    
+    PantallaModificarOrden pantalla3; 
     PanelOrdenConDomicilio panel11;
     PanelConsultarOrdenConDomicilio panel12;
     PantallaModificarOrdenConDomicilio pantalla4;
@@ -750,7 +749,7 @@ public class Controlador {
 
         // Crear la orden
         Orden orden;
-        if (panel7.getjRadioButton1().isSelected()) { // Orden con domicilio
+        if (panel7.getjRadioButton2().isSelected()) { // Orden con domicilio
             String direccion = panel7.getjTextField3().getText();
             String destinatario = panel7.getjTextField6().getText();
             String telefono = panel7.getjTextField4().getText();
@@ -1100,7 +1099,9 @@ public class Controlador {
                 break;
             case 2:
                 agregarProductoordencompraredicion();
-                break;        
+                break;
+            case 3:
+                agregarProductoordencomprarcondomicilioedicion();
             default:
                 System.out.println("El número no está en el rango de 1 a 4.");
                 break;
@@ -1111,7 +1112,343 @@ public class Controlador {
 
 //--------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------
+    //Metodos para consutas
+    public void cargarOrdenescondomicilioconsulta() {
+        // Simula obtener las órdenes de compra desde la base de datos
+        List<OrdenConDomicilio> ordenesConDomicilio = OrdenConDomicilio.listarOrdenescondomicilio(); // Método que retorna una lista de órdenes
+        panel12.getjPanel1().setLayout(new BoxLayout(panel12.getjPanel1(), BoxLayout.Y_AXIS)); // Layout vertical para los paneles
+        // Itera sobre las órdenes y crea paneles individuales
+        for (OrdenConDomicilio ordenConDomicilio : ordenesConDomicilio) {
+            PanelOrdenConDomicilio panelOrdenConDomicilio = new PanelOrdenConDomicilio(); // Asumiendo que PanelOrden es una clase creada para mostrar cada orden
+            panelOrdenConDomicilio.setjPanelPadre(panel12.getjPanel1());
+            Controlador controlador = new Controlador(panelOrdenConDomicilio);
+            controlador.cargarOrdencondomicilioindividualconsulta(ordenConDomicilio, panelOrdenConDomicilio); //Llenar el panel con datos de la orden
+            panel12.getjPanel1().add(panelOrdenConDomicilio); // Agregar el panel al contenedor principal
+            panel12.getPaneles().add(panelOrdenConDomicilio); // Guardar referencia en la lista para futuras manipulaciones
+        }
+        panel12.getjPanel1().revalidate();
+        panel12.getjPanel1().repaint();
+    }
+
+    public void filtrarOrdenescondomicilioconsulta() {
+        String texto = panel12.getjTextField1().getText().toLowerCase(); //Obtener texto del campo de búsqueda
+        //Recorre los paneles y verifica si coinciden con el texto
+        for (PanelOrdenConDomicilio panelOrdenConDomicilio : panel12.getPaneles()) {
+            String nombreOrden = panelOrdenConDomicilio.getjLabel8().getText().toLowerCase(); // Asegúrate de que `getjLabelNombre()` devuelva un atributo identificador como el nombre o número de orden
+            boolean visible = nombreOrden.contains(texto); // Verifica si el texto coincide
+
+            panelOrdenConDomicilio.setVisible(visible); // Oculta o muestra el panel según la coincidencia
+        }
+
+        panel12.getjPanel1().revalidate();
+        panel12.getjPanel1().repaint();
+    }
     
+    public void cargarOrdencondomicilioindividualconsulta(OrdenConDomicilio ordenConDomicilio, PanelOrdenConDomicilio panelOrdenConDomicilio) {
+        //Establece los valores generales de la orden
+        panelOrdenConDomicilio.getjLabel8().setText(Integer.toString(ordenConDomicilio.getId()));
+        panelOrdenConDomicilio.getjLabel10().setText(ordenConDomicilio.getCliente());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd"); //HH:mm::ss");
+        panelOrdenConDomicilio.getjLabel9().setText(formatter.format(ordenConDomicilio.getFecha()));
+        panelOrdenConDomicilio.getjLabel13().setText(Double.toString(ordenConDomicilio.getTotal()));
+        
+        panelOrdenConDomicilio.getjLabel11().setText(ordenConDomicilio.getDireccion());
+        panelOrdenConDomicilio.getjLabel16().setText(ordenConDomicilio.getDestinatario());
+        panelOrdenConDomicilio.getjLabel17().setText(ordenConDomicilio.getTelefono());
+        panelOrdenConDomicilio.getjLabel19().setText(ordenConDomicilio.getEstado());
+        
+        
+        //Asignar productos al panel
+        panelOrdenConDomicilio.setProductosagregados(ordenConDomicilio.getProductos());
+        //Cargar los productos en la tabla
+        DefaultTableModel modelo = (DefaultTableModel) panelOrdenConDomicilio.getjTable1().getModel();
+        modelo.setRowCount(0); // Limpiar la tabla existente
+        for (Producto producto : ordenConDomicilio.getProductos()) {
+            modelo.addRow(new Object[]{
+                producto.getNombre_producto(),
+                producto.getCantidad(),
+                producto.getPrecio()
+            });
+        }
+        // Asociar el ID de la orden al panel
+        panelOrdenConDomicilio.setId(ordenConDomicilio.getId());
+    }
+
+    //--
+    
+        public void eliminarOrdencondomicilioconsulta() {
+        // Crear un objeto de la orden de compra con el id actual
+        OrdenConDomicilio ordenConDomicilio = new OrdenConDomicilio();
+        ordenConDomicilio.setId(panel11.getId()); // Obtén el ID de la orden desde el panel
+
+        // Iterar sobre cada producto en la orden
+        for (Producto producto : panel11.getProductosagregados()) {
+            producto.setCantidad(producto.getCantidad()); // Seteamos la cantidad a restablecer
+            producto.devolverCantidadProducto(); // Método para actualizar la cantidad
+        }
+
+        // Eliminar la orden de la base de datos
+        ordenConDomicilio.eliminarOrden(); // Implementa un método similar a eliminarCaso() en OrdenCompra
+
+        // Eliminar el panel de la vista
+        panel11.getjPanelPadre().remove(panel11);
+        panel11.getjPanelPadre().revalidate();
+        panel11.getjPanelPadre().repaint();
+
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(panel11, "Orden de compra  con domicilio eliminada exitosamente.");
+}
+
+
+    //--
+        
+    //Metodos para editar una orden de compra--   
+    //----
+    //Metodos para agregar productos a una orden de compra en el registro--
+      //Metodos para un producto invidual dentro del panel para poder seleccionar productos para la orden de compra
+    public void cargarProductoseleccionordencompracondomicilioedicion(Producto producto){
+        //Cargar los datos del producto en los labels
+        panel8.getjLabel8().setText(producto.getNombre_producto());
+        panel8.getjLabel10().setText(producto.getDescripcion());
+        panel8.getjLabel9().setText(Integer.toString(producto.getPrecio()));
+        panel8.getjLabel11().setText(producto.getCategoria());
+        panel8.getjLabel7().setText(producto.getMarca());
+        panel8.getjLabel13().setText(Integer.toString(producto.getCantidad()));  // Aquí cargamos la cantidad      
+        panel8.setCantidadtotal(producto.getCantidad());
+        //Cargar la imagen del producto (asegurándote de que el método getImagen() devuelva una ruta válida o una imagen en formato adecuado)
+        //jLabel14 es el JLabel donde se mostrará la imagen
+        byte[] imagenBytes = producto.getImagen();
+        if (imagenBytes != null) {
+            ImageIcon imagenProducto = new ImageIcon(imagenBytes);
+            panel8.getjLabel14().setIcon(imagenProducto);
+        }    
+        panel8.setId(producto.getId());      
+    }
+   
+    //Metodo complementario
+    public void cargarProductosseleccionordencomprarcondomicilioedicion(){
+        //Obtener la lista de productos desde la base de datos
+        List<Producto> productos = Producto.listarProductos();   
+        //Configuramos el layout para mostrar los productos
+        //panel7.getjPanel2().setLayout(new GridLayout(0, 1, 10, 10)); //Ajusta el layout a GridLayout si quieres una columna vertical
+        pantalla4.getjPanel3().setLayout(new BoxLayout(pantalla4.getjPanel3(), BoxLayout.Y_AXIS)); // Ajusta el layout a GridLayout si quieres una columna vertical
+        // Recorrer los productos y agregar los paneles correspondientes
+        //int id = 0;
+        for (Producto producto : productos) {
+            PanelProductoAgregar panelProducto = new PanelProductoAgregar();
+            panelProducto.setjPanelPadre(pantalla4.getjPanel3());  //Establecemos el panel padre para que el producto se agregue allí
+            panelProducto.setPantalla2(pantalla4);
+            panelProducto.setTipo(3);
+            Controlador controlador = new Controlador(panelProducto);
+            
+            controlador.cargarProductoseleccionordencompraedicion(producto); // Cargamos los datos del producto en el panel
+           pantalla4.getjPanel3().add(panelProducto);  //Agregamos el panel de producto al jPanel1
+           pantalla4.getPaneles().add(panelProducto);
+        }   
+        pantalla4.getjPanel3().revalidate();  //Refrescar la interfaz
+        pantalla4.getjPanel3().repaint();     
+    }
+    
+    public void filtrarProductosordencomprarcondomicilioedicion() {
+        String texto = pantalla4.getjTextField2().getText().toLowerCase();
+        //Recorremos todos los paneles existentes
+        for (PanelProductoAgregar panelProducto : pantalla4.getPaneles()) {
+            //Verificamos si el texto del filtro está contenido en el nombre del producto
+            String nombreProducto = panelProducto.getjLabel8().getText().toLowerCase();
+            boolean visible = nombreProducto.contains(texto);
+            //Mostramos u ocultamos el panel según el filtro
+            panelProducto.setVisible(visible);
+        }
+        //Refrescamos el panel contenedor
+        pantalla4.getjPanel3().revalidate();
+        pantalla4.getjPanel3().repaint();
+       
+    }
+    
+    //Agregar prodicto a la lista de la orden de compra
+    public void agregarProductoordencomprarcondomicilioedicion(){                           //--------------------------------
+        try {
+            int cantidad = Integer.parseInt(panel8.getjTextField1().getText());
+            int disponible = panel8.getCantidadtotal() - panel8.getCantidadacumulativa();
+
+            if (cantidad <= 0 || cantidad > disponible) {
+                JOptionPane.showMessageDialog(null, "Cantidad inválida. Disponible: " + disponible);
+                return;
+            }
+
+            Producto producto = new Producto();
+            producto.setId(panel8.getId());
+            producto.setNombre_producto(panel8.getjLabel8().getText());
+            producto.setPrecio(Integer.parseInt(panel8.getjLabel9().getText()));
+            producto.setCantidad(cantidad);
+
+            panel8.setCantidadacumulativa(panel8.getCantidadacumulativa() + cantidad);
+            panel8.getjLabel13().setText(String.valueOf(disponible - cantidad));
+
+            Object[] fila = {producto.getNombre_producto(), producto.getPrecio(), cantidad};
+            panel8.getPantalla1().getModelo1().addRow(fila);
+            panel8.getPantalla1().getProductosagregados().add(producto);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Ingrese una cantidad válida.");
+        }
+             
+    }
+   
+    public void eliminarProductoordencomprarcondomicilioedicion(){
+        DefaultTableModel modelo = pantalla4.getModelo1();
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No hay productos para eliminar.");
+            return;
+        }
+
+        // Verificar si hay filas en la tabla
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No hay productos para eliminar.");
+            return;
+        }
+
+        // Verificar si hay productos en la lista
+        if (pantalla4.getProductosagregados().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay productos en la lista para eliminar.");
+            return;
+        }
+        
+        int lastIndex = modelo.getRowCount() - 1;
+        Producto productoEliminado = pantalla4.getProductosagregados().get(lastIndex);
+
+        // Actualizar cantidades en el panel correspondiente
+        for (PanelProductoAgregar panelProducto : pantalla4.getPaneles()) {
+            if (panelProducto.getId() == productoEliminado.getId()) {
+                int nuevaCantidadAcumulativa = panelProducto.getCantidadacumulativa() - productoEliminado.getCantidad();
+                panelProducto.setCantidadacumulativa(nuevaCantidadAcumulativa);
+                panelProducto.getjLabel13().setText(String.valueOf(panelProducto.getCantidadtotal() - nuevaCantidadAcumulativa));
+                break;
+            }
+        }
+        // Eliminar del modelo y de la lista
+        modelo.removeRow(lastIndex);
+        pantalla4.getProductosagregados().remove(lastIndex);
+        pantalla4.getjTable1().revalidate();
+        pantalla4.getjTable1().repaint();      
+    }
+    
+    public void actualizarOrdencompracondomicilioedicion() {
+        if (pantalla4.getProductosagregados().isEmpty()) {
+            JOptionPane.showMessageDialog(pantalla4, "No hay productos agregados a la orden.");
+            return;
+        } 
+        
+        // Recorrer los paneles de productos y actualizar sus valores
+        for (PanelProductoAgregar panelProducto : pantalla4.getPaneles()) {
+            Producto producto = new Producto();
+            producto.setId(panelProducto.getId());
+            producto.setCantidad(Integer.parseInt(panelProducto.getjLabel13().getText()));
+            // Añadir el producto actualizado a la lista
+            producto.cambiarCantidadProducto();
+            //productosActualizados.add(producto);
+        }
+        
+        // Crear la orden con los datos actualizados
+        OrdenConDomicilio ordenConDomicilio = new OrdenConDomicilio();
+        ordenConDomicilio.setId(pantalla4.getId());
+        ordenConDomicilio.setCliente(pantalla4.getjTextField1().getText());
+        ordenConDomicilio.setFecha(pantalla4.getjDateChooser1().getDate());
+        
+        ordenConDomicilio.setDireccion(pantalla4.getjTextField3().getText());
+        ordenConDomicilio.setDestinatario(pantalla4.getjTextField4().getText());
+        ordenConDomicilio.setTelefono(pantalla4.getjTextField6().getText());
+        ordenConDomicilio.setEstado(pantalla4.getjComboBox1().getSelectedItem().toString());
+        
+        ordenConDomicilio.setProductos(pantalla4.getProductosagregados());
+        ordenConDomicilio.calcularTotal(); // Actualiza el total basado en los productos
+        
+        
+        
+        
+        
+        if (pantalla4.getProductosagregados().isEmpty()) {
+            JOptionPane.showMessageDialog(pantalla4, "No hay productos agregados a la orden de compra con domicilio.");
+            return;
+        }
+
+        ordenConDomicilio.actualizarOrden();
+        // Limpieza de la interfaz
+        pantalla4.getModelo1().setRowCount(0);
+        JOptionPane.showMessageDialog(pantalla4, "Orden actualizada exitosamente.");
+        Controlador controlador = new Controlador();
+        controlador.cargarOrdencondomicilioindividualconsulta(ordenConDomicilio, pantalla4.getPantalla());
+        pantalla4.getProductosagregados().clear();
+        pantalla4.dispose();
+        
+}
+    //--
+    //----
+     //Metodo para cargar un producto en la ventana en la que se editara
+    public void cargarOrdencondomicilioedicion(OrdenConDomicilio ordenConDomicilio) throws IOException{
+        //Establece los valores generales de la orden
+        pantalla4.getjTextField1().setText(ordenConDomicilio.getCliente());
+        pantalla4.getjDateChooser1().setDate(ordenConDomicilio.getFecha());
+        //
+        pantalla4.getjTextField3().setText(ordenConDomicilio.getDireccion());
+        pantalla4.getjTextField6().setText(ordenConDomicilio.getDestinatario());
+        pantalla4.getjTextField4().setText(ordenConDomicilio.getTelefono());
+        pantalla4.getjComboBox1().setSelectedItem(ordenConDomicilio.getEstado());
+        //Asignar productos al panel
+        //pantalla3.setProductosagregados(orden.getProductos());
+        //Cargar los productos en la tabla
+        DefaultTableModel modelo = (DefaultTableModel) pantalla4.getjTable1().getModel();
+        modelo.setRowCount(0); // Limpiar la tabla existente
+        for (Producto producto : ordenConDomicilio.getProductos()) {
+            modelo.addRow(new Object[]{
+                producto.getNombre_producto(),
+                producto.getCantidad(),
+                producto.getPrecio()
+            });
+        }
+        // Asociar el ID de la orden al panel
+        pantalla4.setId(ordenConDomicilio.getId());
+        pantalla4.setProductosagregados(ordenConDomicilio.getProductos());
+    }
+    
+    public void abrirVentanaordencondomicilioedicion() throws IOException, ParseException{     
+        //
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");     
+        // Valida el contenido del label
+        String fechaTexto = panel11.getjLabel9().getText();
+        if (fechaTexto == null || fechaTexto.isEmpty()) {
+            throw new ParseException("La fecha no puede estar vacía", 0);
+        }
+        
+        // Convierte el texto a una fecha
+        Date fecha = formato.parse(fechaTexto);//panel5.getjLabel9().getText());      
+        // Crea un Timestamp a partir de la fecha
+        Timestamp timestamp = new Timestamp(fecha.getTime());
+       
+        // Abre la ventana
+        PantallaModificarOrdenConDomicilio pantalla = new PantallaModificarOrdenConDomicilio();
+        pantalla.setPantalla(panel11);
+        
+        //Crear el objeto Orde con los datos actuales del producto en la vista
+        OrdenConDomicilio ordenConDomicilio = new OrdenConDomicilio (
+                panel11.getId(),
+                panel11.getjLabel10().getText(),
+                timestamp,
+                Double.parseDouble(panel11.getjLabel13().getText()),
+                panel11.getjLabel11().getText(),
+                panel11.getjLabel16().getText(),
+                panel11.getjLabel17().getText(),
+                panel11.getjLabel19().getText()
+                
+                
+        );
+        ordenConDomicilio.setProductos(panel11.getProductosagregados());
+            
+        // Cargar los datos del producto en la ventana de modificación
+        Controlador controlador = new Controlador(pantalla);//pantalla1);
+        controlador.cargarOrdencondomicilioedicion(ordenConDomicilio);
+        //Mostrar la ventana
+        pantalla.setVisible(true);
+    }
     
     
 }

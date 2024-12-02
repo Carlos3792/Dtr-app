@@ -34,7 +34,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener{
         jButton6.addActionListener(this);
         jButton7.addActionListener(this);
         
-        jButton2.setVisible(false);
+        //jButton2.setVisible(false);
         
         // Agregar MouseListener a los botones para cambiar el color al pasar el mouse
         addMouseListenerToButton(jButton1);
@@ -149,7 +149,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener{
 
         jButton7.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("⚪ Consultar caso de soporte");
+        jButton7.setText("⚪ Consultar domicilio");
         jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(21, 65, 83)));
         jButton7.setContentAreaFilled(false);
         jButton7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -161,7 +161,7 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener{
 
         jButton2.setFont(new java.awt.Font("DejaVu Sans Condensed", 0, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("⚪ Sin definir");
+        jButton2.setText("⚪ Consultar caso de soporte");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(21, 65, 83)));
         jButton2.setContentAreaFilled(false);
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -211,6 +211,8 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener{
                 .addComponent(jButton2)
                 .addContainerGap(139, Short.MAX_VALUE))
         );
+
+        jButton7.getAccessibleContext().setAccessibleName("⚪ Consultar domicilio");
 
         jScrollPane3.setViewportView(jPanel3);
 
@@ -342,6 +344,11 @@ public class MainFrame extends javax.swing.JFrame implements ActionListener{
         }
         if(e.getActionCommand().equals("⚪ Consultar orden de compra")){
             PanelConsultarOrden pantalla1 = new PanelConsultarOrden();
+            mostrarPanel(pantalla1);  
+        }
+        
+        if(e.getActionCommand().equals("⚪ Consultar domicilio")){
+            PanelConsultarOrdenConDomicilio pantalla1 = new PanelConsultarOrdenConDomicilio();
             mostrarPanel(pantalla1);  
         }
         

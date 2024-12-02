@@ -332,20 +332,20 @@ public class PanelOrdenConDomicilio extends javax.swing.JPanel implements Action
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Editar")){
             
-            /*Controlador controlador = new Controlador(this);
+            Controlador controlador = new Controlador(this);
             try {
                 controlador.abrirVentanaordencondomicilioedicion();
             } catch (IOException ex) {
                 Logger.getLogger(PanelOrden.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
                 Logger.getLogger(PanelOrden.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
+            }
             
         }
         if(e.getActionCommand().equals("Eliminar")){
             // Llamar al método para eliminar el producto
             Controlador controlador = new Controlador(this);
-            //controlador.eliminarOrdencondomicilioconsulta();
+            controlador.eliminarOrdencondomicilioconsulta();
         }
     }
     

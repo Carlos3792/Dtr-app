@@ -34,22 +34,22 @@ public class PanelConsultarOrdenConDomicilio extends javax.swing.JPanel implemen
         addMouseListenerToButton(jButton4);
         jButton4.addActionListener(this);
         Controlador controlador = new Controlador(this);
-        //controlador.cargarOrdenescondomicilioconsulta();
-        //controlador.filtrarOrdenesconsulta();
+        controlador.cargarOrdenescondomicilioconsulta();
+        controlador.filtrarOrdenescondomicilioconsulta();
         jTextField1.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                //controlador.filtrarOrdenescondimicilioconsulta();
+                controlador.filtrarOrdenescondomicilioconsulta();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                //controlador.filtrarOrdenescondimicilioconsulta();
+                controlador.filtrarOrdenescondomicilioconsulta();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                //controlador.filtrarOrdenescondimicilioconsulta();
+                controlador.filtrarOrdenescondomicilioconsulta();
             }
         });
     }

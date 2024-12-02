@@ -64,27 +64,26 @@ public class PantallaModificarOrdenConDomicilio extends javax.swing.JFrame imple
         Controlador controlador = new Controlador(this);
         //controlador.cargarProductosseleccionordencomprarcondomicilioedicion();
         
-        //Controlador controlador = new Controlador(this);
-        //controlador.cargarProductosseleccionordencompraregistro();
+        controlador.cargarProductosseleccionordencomprarcondomicilioedicion();
         // Agregar filtrado dinámico al campo de texto
         jTextField2.getDocument().addDocumentListener(new DocumentListener() {
         @Override
         public void insertUpdate(DocumentEvent e) {
-            //filtrar();
+            filtrar();
         }
 
         @Override
         public void removeUpdate(DocumentEvent e) {
-            //filtrar();
+            filtrar();
         }
 
         @Override
         public void changedUpdate(DocumentEvent e) {
-            //filtrar();
+            filtrar();
         }
 
         private void filtrar() {
-            //controlador.filtrarProductosordencomprarcondomicilioedicion();
+            controlador.filtrarProductosordencomprarcondomicilioedicion();
         }
     });
         
@@ -443,12 +442,12 @@ public class PantallaModificarOrdenConDomicilio extends javax.swing.JFrame imple
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Actualizar")){
-            //Controlador controlador = new Controlador(this);
-            //controlador.actualizarOrdencompraedicion();
+            Controlador controlador = new Controlador(this);
+            controlador.actualizarOrdencompracondomicilioedicion();
         }
         if(e.getActionCommand().equals("Quitar el ultimo")){
-            //Controlador controlador = new Controlador(this);
-            //controlador.eliminarProductoordencompraredicion();
+            Controlador controlador = new Controlador(this);
+            controlador.eliminarProductoordencomprarcondomicilioedicion();
         }
         
     }
